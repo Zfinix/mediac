@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>348358604814-hc4mmu89bume09sjlk7lc5he5cuo8ueh.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.348358604814-hc4mmu89bume09sjlk7lc5he5cuo8ueh</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCb4ySmsNF1QfwmAhQ3eUEYPb02tMubpz8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>348358604814</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mediac</string>
+	<key>PROJECT_ID</key>
+	<string>mediac-1</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mediac-1.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:348358604814:ios:d444f6a0736bd739</string>
+	<key>DATABASE_URL</key>
+	<string>https://mediac-1.firebaseio.com</string>
+</dict>
+</plist>

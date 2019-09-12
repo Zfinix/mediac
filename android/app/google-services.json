@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "348358604814",
+    "firebase_url": "https://mediac-1.firebaseio.com",
+    "project_id": "mediac-1",
+    "storage_bucket": "mediac-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:348358604814:android:d444f6a0736bd739",
+        "android_client_info": {
+          "package_name": "com.mediac"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "348358604814-t5nqlh29k3igl3rg7hbuo42t7sjs2ovr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4jh9wuutZR0W7-pdU2EFonb36RZ7nQds"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "348358604814-t5nqlh29k3igl3rg7hbuo42t7sjs2ovr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "348358604814-hc4mmu89bume09sjlk7lc5he5cuo8ueh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mediac"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

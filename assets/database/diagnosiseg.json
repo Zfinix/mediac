@@ -1,0 +1,66 @@
+{
+    "question": {
+        "type": "single",
+        "text": "Have you recently had any trauma or physical injury — for example, an accident or while exercising?",
+        "items": [
+            {
+                "id": "p_147",
+                "name": "Physical injury",
+                "choices": [
+                    {
+                        "id": "present",
+                        "label": "Yes"
+                    },
+                    {
+                        "id": "absent",
+                        "label": "No"
+                    },
+                    {
+                        "id": "unknown",
+                        "label": "Don't know"
+                    }
+                ]
+            }
+        ],
+        "extras": {}
+    },
+    "conditions": [
+        {
+            "id": "c_49",
+            "name": "Migraine",
+            "common_name": "Migraine",
+            "probability": 0.3281
+        },
+        {
+            "id": "c_563",
+            "name": "Bacterial meningitis",
+            "common_name": "Bacterial meningitis",
+            "probability": 0.2358
+        },
+        {
+            "id": "c_671",
+            "name": "Encephalitis",
+            "common_name": "Encephalitis",
+            "probability": 0.1178
+        },
+        {
+            "id": "c_562",
+            "name": "Viral meningitis",
+            "common_name": "Viral meningitis",
+            "probability": 0.0746
+        },
+        {
+            "id": "c_87",
+            "name": "Common cold",
+            "common_name": "Common cold",
+            "probability": 0.0718
+        },
+        {
+            "id": "c_55",
+            "name": "Tension-type headaches",
+            "common_name": "Tension-type headaches",
+            "probability": 0.0605
+        }
+    ],
+    "extras": {}
+}
