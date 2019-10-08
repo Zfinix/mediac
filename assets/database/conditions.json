@@ -10233,6 +10233,40 @@
                 "icd10_code": "E16.4"
             },
             "triage_level": "consultation"
+        },
+        {
+            "id": "c_1000000",
+            "name": "Chlamydia Infection",
+            "common_name": "Chlamydia",
+            "sex_filter": "both",
+            "categories": [
+                "STI"
+            ],
+            "prevalence": "very_rare",
+            "acuteness": "chronic_with_exacerbations",
+            "severity": "severe",
+            "extras": {
+                "hint": "You should see your family doctor as soon as possible.",
+                "icd10_code": "E16.4"
+            },
+            "triage_level": "consultation"
+        },
+        {
+            "id": "c_2000000",
+            "name": "Human Papilloma Virus",
+            "common_name": "HPV",
+            "sex_filter": "both",
+            "categories": [
+                "STI"
+            ],
+            "prevalence": "very_rare",
+            "acuteness": "chronic_with_exacerbations",
+            "severity": "severe",
+            "extras": {
+                "hint": "You should see your family doctor as soon as possible.",
+                "icd10_code": "E16.4"
+            },
+            "triage_level": "consultation"
         }
     ]
 }

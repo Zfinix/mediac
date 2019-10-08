@@ -1,13 +1,22 @@
+import 'dart:async';
+
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mediac/auth/signup.dart';
 import 'package:mediac/utils/margin_utils.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'auth/login.dart';
-void main() => runApp(MyApp());
+import 'utils/conectivity.dart';
+
+void main() {
+  //ConnectionStatusSingleton connectionStatus = ConnectionStatusSingleton.getInstance();
+  //connectionStatus.initialize();
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,7 +37,10 @@ class Intersit extends StatefulWidget {
   _IntersitState createState() => _IntersitState();
 }
 
-class _IntersitState extends State<Intersit> {
+class _IntersitState extends BaseState<Intersit> {
+  StreamSubscription _connectionChangeStream;
+
+  bool isOffline = false;
   Widget page;
   double opacity = 1;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -56,6 +68,12 @@ class _IntersitState extends State<Intersit> {
         await flutterLocalNotificationsPlugin.pendingNotificationRequests();
     print(pendingNotificationRequests);
   }
+
+ /* @override
+  void castStatefulWidget() {
+    // ignore: unnecessary_statements
+    widget is Intersit;
+  }*/
 
   Future onSelectNotification(String payload) async {
     if (payload != null) {
@@ -108,6 +126,8 @@ class _IntersitState extends State<Intersit> {
       opacity = 1;
     });
   }
+
+  
 }
 
 class IntersitPage extends StatefulWidget {

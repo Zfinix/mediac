@@ -13,6 +13,7 @@ import 'package:mediac/utils/margin_utils.dart';
 import 'package:mediac/utils/persistence.dart';
 import 'package:mediac/utils/url.dart';
 import 'package:mediac/views/symptoms.dart';
+import 'package:mediac/views/symptomsOffline.dart';
 
 import 'diagnosis.dart';
 
@@ -43,7 +44,6 @@ class _ControllerState extends State<Controller> {
 
   Container startButton() {
     return Container(
-      width: 200,
       child: OutlineButton(
         highlightColor: Colors.white24,
         color: Colors.blue,
@@ -60,6 +60,30 @@ class _ControllerState extends State<Controller> {
         },
         child: Text(
           "Start Assesment",
+          style: TextStyle(fontSize: 16),
+        ),
+      ),
+    );
+  }
+
+  Container offlineButton() {
+    return Container(
+      child: OutlineButton(
+        highlightColor: Colors.white24,
+        color: Colors.blue,
+        textColor: Colors.blue,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        onPressed: () {
+          if (widget.userModel != null)
+            this.widget.changeView(SymptomsOffline(
+                  changeView: this.widget.changeView,
+                  userModel: widget.userModel,
+                ));
+          else
+            datax();
+        },
+        child: Text(
+          "Offline Assesment",
           style: TextStyle(fontSize: 16),
         ),
       ),
@@ -228,9 +252,10 @@ var d = string.indexOf(substring) != -1;
                     ),
                     cYM(30),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         startButton(),
+                        offlineButton()
                       ],
                     ),
                     cYM(30),

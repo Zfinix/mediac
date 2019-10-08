@@ -11,8 +11,10 @@ import 'package:mediac/views/detail/conditionDetail.dart';
 class SicknessDetail extends StatefulWidget {
   final Function changeView;
   final Conditions condition;
+  final bool isInconclusive;
   const SicknessDetail(
       {Key key,
+      this.isInconclusive = false,
       @required this.changeView,
       this.condition})
       : super(key: key);
@@ -34,7 +36,7 @@ class _SicknessDetailState extends State<SicknessDetail> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Container(
-          child: Column(
+          child:  widget.condition != null ?Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -205,7 +207,9 @@ class _SicknessDetailState extends State<SicknessDetail> {
                     fontSize: 18),
               )
             ],
-          ),
+          ):Column(children: <Widget>[
+            
+          ],),
         ));
   }
 

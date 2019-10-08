@@ -43,9 +43,7 @@ class _DiagnosisState extends State<Diagnosis> {
             shrinkWrap: true,
             children: <Widget>[
               Container(
-                height: 80,
-                child: Image.asset('assets/images/mediac2.png')),
-              
+                  height: 80, child: Image.asset('assets/images/mediac2.png')),
               Text(
                 widget?.diagnosisResponse?.question?.text ?? '',
                 textAlign: TextAlign.left,
@@ -266,12 +264,8 @@ class _DiagnosisState extends State<Diagnosis> {
           ));
     } else {
       if (diagnosisResponse != null)
-        this.widget.changeView(Diagnosis(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              diagnosisResponse:
-                  diagnosisResponse /* DiagnosisResponse.fromJson(dataM) */,
-              otherConditions: diagnosisResponse.conditions,
-              userModel: this.widget.userModel,
             ));
     }
   }
