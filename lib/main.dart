@@ -10,9 +10,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'auth/login.dart';
 
 void main() {
-  //ConnectionStatusSingleton connectionStatus = ConnectionStatusSingleton.getInstance();
-  //connectionStatus.initialize();
-
   runApp(MyApp());
 }
 
