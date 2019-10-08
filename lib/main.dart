@@ -81,6 +81,7 @@ class _IntersitState extends State<Intersit> {
   
   Future<void> onDidReceiveLocalNotification(
       int id, String title, String body, String payload) async {
+    
     // display a dialog with the notification details, tap ok to go to another page
     await showDialog(
       context: context,
