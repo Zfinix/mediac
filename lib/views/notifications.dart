@@ -1,18 +1,23 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:mediac/utils/base64/images.dart';
+import 'package:mediac/utils/conectivity.dart';
 import 'package:mediac/utils/margin_utils.dart';
 import 'package:mediac/utils/persistence.dart';
 
+//Notifications Page
 class Notifications extends StatefulWidget {
   Notifications({Key key}) : super(key: key);
 
   _NotificationsState createState() => _NotificationsState();
 }
 
-class _NotificationsState extends State<Notifications> {
+class _NotificationsState extends BaseState<Notifications> {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       new FlutterLocalNotificationsPlugin();
   List<NotifItem> notifData = [];
@@ -40,23 +45,65 @@ class _NotificationsState extends State<Notifications> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Schedule Checkups'),
-        ),
-        body: Center(
-          child: ListView.builder(
-            itemCount: notifData?.length ?? 0,
-            itemBuilder: (BuildContext context, int i) {
-              return Card(
-                child: ListTile(
-                    title: Text(notifData[i].title ?? ''),
-                    subtitle: Text(notifData[i].body ?? ''),
-                    trailing: IconButton(
-                      icon: Icon(Icons.close),
-                      onPressed: () => _deleteNotif(i),
-                    )),
-              );
-            },
+          iconTheme: IconThemeData(color: Colors.black),
+          elevation: 2,
+          brightness: Brightness.light,
+          backgroundColor: Colors.white,
+          title: Text(
+            'Schedule Checkups',
+            style: TextStyle(
+                color: Colors.black, fontSize: 17, fontWeight: FontWeight.w600),
           ),
+        ),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              colorFilter: new ColorFilter.mode(
+                  Colors.white.withOpacity(0.953), BlendMode.screen),
+              image: MemoryImage(base64.decode('$base64Image')),
+            ),
+          ),
+          child: Center(
+              child:
+                  notifData == null || notifData == [] || notifData.length > 0
+                      ? ListView.builder(
+                          itemCount: notifData?.length ?? 0,
+                          itemBuilder: (BuildContext context, int i) {
+                            return Padding(
+                              padding: const EdgeInsets.all(18.0),
+                              child: Column(
+                                children: <Widget>[
+                                  ListTile(
+                                      title: Text(
+                                        notifData[i].title ?? '',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      subtitle: Text(
+                                        notifData[i].body ?? '',
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                      trailing: IconButton(
+                                        icon: Icon(Icons.close),
+                                        onPressed: () => _deleteNotif(i),
+                                      )),
+                                  Divider()
+                                ],
+                              ),
+                            );
+                          },
+                        )
+                      : Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Text('You Have No Pending Appointments')
+                            ],
+                          ),
+                        )),
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
@@ -71,6 +118,7 @@ class _NotificationsState extends State<Notifications> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
+            elevation: 0,
             title: Center(child: Text('Alert')),
             content: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -81,7 +129,8 @@ class _NotificationsState extends State<Notifications> {
                     'Do you want to remove this Checkup',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
                   ),
                 )
@@ -133,6 +182,7 @@ class _NotificationsState extends State<Notifications> {
         context: context,
         builder: (_) {
           return new AlertDialog(
+            elevation: 0,
             contentPadding: const EdgeInsets.all(16.0),
             content: Container(
               width: MediaQuery.of(context).size.width * 0.7,
@@ -178,13 +228,15 @@ class _NotificationsState extends State<Notifications> {
               new FlatButton(
                   child: const Text('ADD NEW CHECKUP'),
                   onPressed: () async {
-                    await addNotification(NotifItem(
-                        id: (notifData?.length ?? 0) + 1,
-                        title: title,
-                        body: body,
-                        date: notifTime.toIso8601String(),
-                        payload: body));
-                    Navigator.pop(context);
+                    if (title != null) {
+                      await addNotification(NotifItem(
+                          id: (notifData?.length ?? 0) + 1,
+                          title: title,
+                          body: body,
+                          date: notifTime.toIso8601String(),
+                          payload: body));
+                      Navigator.pop(context);
+                    }
                   })
             ],
           );
@@ -253,8 +305,8 @@ class _NotificationsState extends State<Notifications> {
 
   void inim() async {
     try {
-      var pendingNotificationRequests =
-          await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+      /* var pendingNotificationRequests = */
+      await flutterLocalNotificationsPlugin.pendingNotificationRequests();
 
       var items = await loadNotifItems();
       print(items?.data.toString());

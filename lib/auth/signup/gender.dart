@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mediac/models/offlineUserModel.dart';
@@ -68,6 +66,7 @@ class _GenderState extends State<Gender> {
           !isLoading
               ? Container(
                   width: 150,
+                  color: Colors.white,
                   child: OutlineButton(
                     highlightColor: Colors.white24,
                     color: Colors.blue,
@@ -137,6 +136,7 @@ class _GenderState extends State<Gender> {
         showDialog(
             context: context,
             builder: (_) => new AlertDialog(
+                elevation: 0,
                   title: new Text("Error"),
                   content: new Text("${e.message}"),
                 ));

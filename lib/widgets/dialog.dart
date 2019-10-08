@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mediac/utils/conectivity.dart';
 import 'package:mediac/utils/margin_utils.dart';
 
 class Dialog extends StatefulWidget {
@@ -7,7 +8,7 @@ class Dialog extends StatefulWidget {
   _DialogState createState() => _DialogState();
 }
 
-class _DialogState extends State<Dialog> {
+class _DialogState extends BaseState<Dialog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

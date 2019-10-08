@@ -3,14 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:mediac/functions/databaseFunc.dart';
 import 'package:mediac/logic/demoData.dart';
+import 'package:mediac/models/conditionsModel.dart';
+import 'package:mediac/models/diagnosisResponse.dart';
 import 'package:mediac/models/submitSymptoms.dart';
 import 'package:mediac/models/symptomsModel.dart';
 import 'package:mediac/models/offlineUserModel.dart';
-import 'package:mediac/utils/date.dart';
 import 'package:mediac/utils/margin_utils.dart';
 import 'package:mediac/views/detail/conditionDetail.dart';
-import 'package:mediac/views/diagnosis.dart';
 import 'controller.dart';
+import 'detail/sicknessDetail.dart';
 
 class SymptomsOffline extends StatefulWidget {
   final Function changeView;
@@ -24,9 +25,10 @@ class SymptomsOffline extends StatefulWidget {
 
 class _SymptomsOfflineState extends State<SymptomsOffline> {
   String _search;
-  List<Data>  symptomsModel = List();
+  List<Data> symptomsModel = List();
   List<Data> selectedSymptoms = List();
-  var anxietyData,
+  List<Conditions> conditionsList = List();
+  ConditionData anxietyData,
       bronchitisData,
       chlamydiaData,
       depressionData,
@@ -178,7 +180,8 @@ class _SymptomsOfflineState extends State<SymptomsOffline> {
         itemCount: symptomsModel?.length ?? 0,
         itemBuilder: (BuildContext context, int i) {
           if (isSearching) {
-            if (symptomsModel[i].name
+            if (symptomsModel[i]
+                .name
                 .toLowerCase()
                 .contains(_search.toLowerCase())) {
               return Column(
@@ -258,12 +261,12 @@ class _SymptomsOfflineState extends State<SymptomsOffline> {
       evidence.add(Evidence(choiceId: 'present', id: selectedSymptoms[i].id));
     }
 
-    SubmitSymptoms data = new SubmitSymptoms(
+    /*  SubmitSymptoms data = new SubmitSymptoms(
         age: getAge(widget.userModel.birthDay),
         sex: widget.userModel.gender.toLowerCase(),
         evidence: evidence);
     // print(data.toJson());
-
+ */
     var evidenceList = [];
 
     for (var item in evidence) {
@@ -388,8 +391,9 @@ class _SymptomsOfflineState extends State<SymptomsOffline> {
       yeastInfection,
     ];
 
+//Calculate probability of the disease
     var highestProbability = listOfDiseaseFiltered.reduce(max);
-     
+
     var conditions = await DatabaseFunc.loadConditions();
 
     for (var item in conditions.data) {
@@ -454,173 +458,289 @@ class _SymptomsOfflineState extends State<SymptomsOffline> {
         yeastInfectionData = item;
       }
     }
+    var total = listOfDiseaseFiltered.reduce((a, b) => a + b);
 
     for (var i = 0; i < listOfDiseaseFiltered.length; i++) {
       if (i == 0 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: anxietyData,
+              condition: Conditions(
+                  id: anxietyData.id,
+                  name: anxietyData.name,
+                  condition: [anxietyData],
+                  commonName: anxietyData.commonName,
+                  probability: double.parse('$anxiety') / total),
               userModel: widget.userModel,
+              probability: double.parse('$anxiety') / total,
             ));
         break;
       }
       if (i == 1 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: bronchitisData,
+              condition: Conditions(
+                  id: bronchitisData.id,
+                  name: bronchitisData.name,
+                  condition: [bronchitisData],
+                  commonName: bronchitisData.commonName,
+                  probability: double.parse('$bronchitis') / total),
               userModel: widget.userModel,
+              probability: double.parse('$bronchitis') / total,
             ));
         break;
       }
       if (i == 2 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: bronchitisData,
+              condition: Conditions(
+                  id: chlamydiaData.id,
+                  name: chlamydiaData.name,
+                  condition: [chlamydiaData],
+                  commonName: chlamydiaData.commonName,
+                  probability: double.parse('$chlamydia') / total),
               userModel: widget.userModel,
+              probability: double.parse('$chlamydia') / total,
             ));
         break;
       }
       if (i == 3 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: chlamydiaData,
+              condition: Conditions(
+                  id: depressionData.id,
+                  name: depressionData.name,
+                  condition: [depressionData],
+                  commonName: depressionData.commonName,
+                  probability: double.parse('$depression') / total),
               userModel: widget.userModel,
+              probability: double.parse('$depression') / total,
             ));
         break;
       }
       if (i == 4 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: depressionData,
+              condition: Conditions(
+                  id: diabetesData.id,
+                  name: diabetesData.name,
+                  condition: [diabetesData],
+                  commonName: diabetesData.commonName,
+                  probability: double.parse('$diabetes') / total),
               userModel: widget.userModel,
+              probability: double.parse('$diabetes') / total,
             ));
         break;
       }
       if (i == 5 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: diabetesData,
+              condition: Conditions(
+                  id: diverticulitisData.id,
+                  name: diverticulitisData.name,
+                  condition: [diverticulitisData],
+                  commonName: diverticulitisData.commonName,
+                  probability: double.parse('$diverticulitis') / total),
               userModel: widget.userModel,
+              probability: double.parse('$diverticulitis') / total,
             ));
         break;
       }
       if (i == 6 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: diverticulitisData,
+              condition: Conditions(
+                  id: endometriosisData.id,
+                  name: endometriosisData.name,
+                  condition: [endometriosisData],
+                  commonName: endometriosisData.commonName,
+                  probability: double.parse('$endometriosis') / total),
               userModel: widget.userModel,
+              probability: double.parse('$endometriosis') / total,
             ));
         break;
       }
       if (i == 7 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: endometriosisData,
+              condition: Conditions(
+                  id: fibromyalgiaData.id,
+                  name: fibromyalgiaData.name,
+                  condition: [fibromyalgiaData],
+                  commonName: fibromyalgiaData.commonName,
+                  probability: double.parse('$fibromyalgia') / total),
               userModel: widget.userModel,
+              probability: double.parse('$fibromyalgia') / total,
             ));
         break;
       }
       if (i == 8 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: fibromyalgiaData,
+              condition: Conditions(
+                  id: hemorrhoidData.id,
+                  name: hemorrhoidData.name,
+                  condition: [hemorrhoidData],
+                  commonName: hemorrhoidData.commonName,
+                  probability: double.parse('$hemorrhoid') / total),
               userModel: widget.userModel,
+              probability: double.parse('$hemorrhoid') / total,
             ));
         break;
       }
       if (i == 9 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: hemorrhoidData,
+              condition: Conditions(
+                  id: herpesData.id,
+                  name: herpesData.name,
+                  condition: [herpesData],
+                  commonName: herpesData.commonName,
+                  probability: double.parse('$herpes') / total),
               userModel: widget.userModel,
+              probability: double.parse('$herpes') / total,
             ));
         break;
       }
       if (i == 10 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: herpesData,
+              condition: Conditions(
+                  id: hpvData.id,
+                  name: hpvData.name,
+                  condition: [hpvData],
+                  commonName: hpvData.commonName,
+                  probability: double.parse('$hpv') / total),
               userModel: widget.userModel,
+              probability: double.parse('$hpv') / total,
             ));
         break;
       }
       if (i == 11 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: hpvData,
+              condition: Conditions(
+                  id: lupusData.id,
+                  name: lupusData.name,
+                  condition: [lupusData],
+                  commonName: lupusData.commonName,
+                  probability: double.parse('$lupus') / total),
               userModel: widget.userModel,
+              probability: double.parse('$lupus') / total,
             ));
         break;
       }
       if (i == 12 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: lupusData,
+              condition: Conditions(
+                  id: lymeData.id,
+                  name: lymeData.name,
+                  condition: [lymeData],
+                  commonName: lymeData.commonName,
+                  probability: double.parse('$lyme') / total),
               userModel: widget.userModel,
+              probability: double.parse('$lyme') / total,
             ));
         break;
       }
       if (i == 13 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: lymeData,
+              condition: Conditions(
+                  id: pneumoniaData.id,
+                  name: pneumoniaData.name,
+                  condition: [pneumoniaData],
+                  commonName: pneumoniaData.commonName,
+                  probability: double.parse('$pneumonia') / total),
               userModel: widget.userModel,
+              probability: double.parse('$pneumonia') / total,
             ));
         break;
       }
       if (i == 14 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: pneumoniaData,
+              condition: Conditions(
+                  id: psoriasisData.id,
+                  name: psoriasisData.name,
+                  condition: [psoriasisData],
+                  commonName: psoriasisData.commonName,
+                  probability: double.parse('$psoriasis') / total),
               userModel: widget.userModel,
+              probability: double.parse('$psoriasis') / total,
             ));
         break;
       }
       if (i == 15 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: psoriasisData,
+              condition: Conditions(
+                  id: scabiesData.id,
+                  name: scabiesData.name,
+                  condition: [scabiesData],
+                  commonName: scabiesData.commonName,
+                  probability: double.parse('$scabies') / total),
               userModel: widget.userModel,
+              probability: double.parse('$scabies') / total,
             ));
+
         break;
       }
       if (i == 16 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: scabiesData,
+              condition: Conditions(
+                  id: schizophreniaData.id,
+                  name: schizophreniaData.name,
+                  condition: [schizophreniaData],
+                  commonName: schizophreniaData.commonName,
+                  probability: double.parse('$schizophrenia') / total),
               userModel: widget.userModel,
+              probability: double.parse('$schizophrenia') / total,
             ));
+
         break;
       }
       if (i == 17 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: schizophreniaData,
+              condition: Conditions(
+                  id: shinglesData.id,
+                  name: shinglesData.name,
+                  condition: [shinglesData],
+                  commonName: shinglesData.commonName,
+                  probability: double.parse('$shingles') / total),
               userModel: widget.userModel,
+              probability: double.parse('$shingles') / total,
             ));
+
         break;
       }
       if (i == 18 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: shinglesData,
+              condition: Conditions(
+                  id: strepThroatData.id,
+                  name: strepThroatData.name,
+                  condition: [strepThroatData],
+                  commonName: strepThroatData.commonName,
+                  probability: double.parse('$strepThroat') / total),
               userModel: widget.userModel,
+              probability: double.parse('$strepThroat') / total,
             ));
         break;
       }
       if (i == 19 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
+        this.widget.changeView(SicknessDetail(
               changeView: this.widget.changeView,
-              illness: strepThroatData,
+              condition: Conditions(
+                  id: yeastInfectionData.id,
+                  name: yeastInfectionData.name,
+                  condition: [yeastInfectionData],
+                  commonName: yeastInfectionData.commonName,
+                  probability: double.parse('$yeastInfection') / total),
               userModel: widget.userModel,
-            ));
-        break;
-      }
-      if (i == 20 && listOfDiseaseFiltered[i] == highestProbability) {
-        this.widget.changeView(ConditionDetail(
-              changeView: this.widget.changeView,
-              illness: yeastInfectionData,
-              userModel: widget.userModel,
+              probability: double.parse('$yeastInfection') / total,
             ));
         break;
       }

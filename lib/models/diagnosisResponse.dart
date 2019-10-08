@@ -1,3 +1,5 @@
+import 'package:mediac/models/conditionsModel.dart';
+
 class DiagnosisResponse {
   Questions question;
   List<Conditions> conditions;
@@ -34,9 +36,10 @@ class Conditions {
   String id;
   String name;
   String commonName;
+  List <ConditionData> condition;
   double probability;
 
-  Conditions({this.id, this.name, this.commonName, this.probability});
+  Conditions({this.id, this.name, this.commonName, this.probability, this.condition});
 
   Conditions.fromJson(Map<String, dynamic> json) {
     id = json['id'];

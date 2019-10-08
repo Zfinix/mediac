@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:mediac/models/diagnosisResponse.dart';
@@ -6,7 +5,6 @@ import 'package:mediac/models/submitSymptoms.dart';
 import 'package:mediac/models/offlineUserModel.dart';
 import 'package:mediac/utils/date.dart';
 import 'package:mediac/utils/margin_utils.dart';
-import 'package:mediac/views/symptoms.dart';
 import 'detail/sicknessDetail.dart';
 import 'package:mediac/functions/api.dart';
 
@@ -37,7 +35,7 @@ class _DiagnosisState extends State<Diagnosis> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
         body: Container(
           child: ListView(
             shrinkWrap: true,
@@ -86,6 +84,7 @@ class _DiagnosisState extends State<Diagnosis> {
   Container startButton() {
     return Container(
       width: 200,
+      color: Colors.white,
       child: OutlineButton(
         highlightColor: Colors.white24,
         color: Colors.blue,
@@ -259,12 +258,23 @@ class _DiagnosisState extends State<Diagnosis> {
     if (probability > 0.5 && currentSickness != null) {
       print(currentSickness);
       this.widget.changeView(SicknessDetail(
+            userModel: widget.userModel,
             changeView: this.widget.changeView,
             condition: diagnosisResponse.conditions[currentSickness],
+          ));
+    } else if (diagnosisResponse != null &&
+        probability > 1 &&
+        probability < 0.5) {
+      this.widget.changeView(SicknessDetail(
+            userModel: widget.userModel,
+            changeView: this.widget.changeView,
+            conditions:diagnosisResponse.conditions
           ));
     } else {
       if (diagnosisResponse != null)
         this.widget.changeView(SicknessDetail(
+              userModel: widget.userModel,
+              isInconclusive: true,
               changeView: this.widget.changeView,
             ));
     }

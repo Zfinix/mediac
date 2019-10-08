@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mediac/auth/login.dart';
 import 'package:mediac/auth/signup/birthday.dart';
@@ -163,7 +161,7 @@ class _SignupState extends State<Signup> {
     return Container(
       width: MediaQuery.of(context).size.width * 0.6,
       child: TextFormField(
-        initialValue: 'chiziaruhoma@gmail.com',
+        // initialValue: 'chiziaruhoma@gmail.com',
         validator: (value) {
           if (isEmail(value)) {
             setState(() {
@@ -193,7 +191,7 @@ class _SignupState extends State<Signup> {
     return Container(
       width: MediaQuery.of(context).size.width * 0.6,
       child: TextFormField(
-        initialValue: 'qqqqqq',
+        //initialValue: 'qqqqqq',
         validator: (value) {
           if (value.length > 4) {
             setState(() {
@@ -223,7 +221,7 @@ class _SignupState extends State<Signup> {
   _buildCmPassword() => Container(
         width: MediaQuery.of(context).size.width * 0.6,
         child: TextFormField(
-          initialValue: 'qqqqqq',
+          //Value: 'qqqqqq',
           validator: (value) {
             if (value == password) {
               setState(() {
@@ -276,6 +274,7 @@ class _SignupState extends State<Signup> {
       );
 
   postData() async {
+    eraseAll();
     String userId = "";
     if (_formKey.currentState.validate() &&
         // selectedDate.year != null &&
@@ -300,6 +299,7 @@ class _SignupState extends State<Signup> {
         showDialog(
             context: context,
             builder: (_) => new AlertDialog(
+                elevation: 0,
                   title: new Text("Error"),
                   content: new Text("$e"),
                 ));
@@ -348,6 +348,7 @@ class _SignupState extends State<Signup> {
         showDialog(
             context: context,
             builder: (_) => new AlertDialog(
+                elevation: 0,
                   title: new Text("Error"),
                   content: new Text("${e.message}"),
                 ));

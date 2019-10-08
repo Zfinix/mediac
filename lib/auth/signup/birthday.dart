@@ -1,14 +1,10 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mediac/models/offlineUserModel.dart';
-import 'package:mediac/utils/date.dart';
 import 'package:mediac/utils/margin_utils.dart';
 import 'package:mediac/utils/persistence.dart';
-import 'package:mediac/views/controller.dart';
 
 import '../baseAuth.dart';
 import 'gender.dart';
@@ -86,7 +82,7 @@ class _BirthdayState extends State<Birthday> {
 
   Container signInButton() {
     return Container(
-      //r   width: 150,
+      color: Colors.white,
       child: OutlineButton(
         highlightColor: Colors.white24,
         color: Colors.blue,
@@ -147,6 +143,7 @@ class _BirthdayState extends State<Birthday> {
         showDialog(
             context: context,
             builder: (_) => new AlertDialog(
+                elevation: 0,
                   title: new Text("Error"),
                   content: new Text("${e.message}"),
                 ));

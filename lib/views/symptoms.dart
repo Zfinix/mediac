@@ -1,6 +1,4 @@
-import 'dart:convert';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mediac/functions/databaseFunc.dart';
 import 'package:mediac/models/diagnosisResponse.dart';
@@ -98,7 +96,7 @@ class _SymptomsState extends State<Symptoms> {
                       child: Icon(Icons.close, color: Colors.blue),
                       onPressed: () {
                         this.widget.changeView(Controller(
-                           //   user: this.widget.user,
+                              userModel: this.widget.userModel,
                               changeView: this.widget.changeView,
                             ));
                       })

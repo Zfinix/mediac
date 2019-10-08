@@ -1,10 +1,9 @@
 import 'dart:convert';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mediac/auth/signup.dart';
-import 'package:mediac/auth/signup/birthday.dart';
 import 'package:mediac/models/offlineUserModel.dart';
+import 'package:mediac/utils/base64/images.dart';
 import 'package:mediac/utils/margin_utils.dart';
 import 'package:mediac/utils/persistence.dart';
 import 'package:mediac/utils/validator.dart';
@@ -114,6 +113,7 @@ class _LoginState extends State<Login> {
   Container signInButton() {
     return Container(
       width: 100,
+      color: Colors.white,
       child: OutlineButton(
         highlightColor: Colors.white24,
         color: Colors.blue,
@@ -132,7 +132,7 @@ class _LoginState extends State<Login> {
     return Container(
       width: MediaQuery.of(context).size.width * 0.6,
       child: TextFormField(
-        initialValue: 'chiziaruhoma@gmail.com',
+        // initialValue: 'chiziaruhoma@gmail.com',
         validator: (value) {
           if (isEmail(value)) {
             setState(() {
@@ -162,7 +162,7 @@ class _LoginState extends State<Login> {
     return Container(
       width: MediaQuery.of(context).size.width * 0.6,
       child: TextFormField(
-        initialValue: 'qqqqqq',
+        // initialValue: 'qqqqqq',
         validator: (value) {
           if (value.isNotEmpty && value.length > 4) {
             setState(() {
@@ -190,7 +190,8 @@ class _LoginState extends State<Login> {
   }
 
   postData() async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState.validate() &&
+        (await getItemData(key: 'user')) != null) {
       setState(() {
         isLoading = true;
       });
@@ -216,6 +217,7 @@ class _LoginState extends State<Login> {
           showDialog(
               context: context,
               builder: (_) => new AlertDialog(
+                  elevation: 0,
                     title: new Text("Error"),
                     content: new Text("This password is invalid"),
                   ));
@@ -223,11 +225,24 @@ class _LoginState extends State<Login> {
           showDialog(
               context: context,
               builder: (_) => new AlertDialog(
+                  elevation: 0,
                     title: new Text("Error"),
                     content: new Text("$e"),
                   ));
         }
       }
+    } else {
+      if ((await getItemData(key: 'user')) == null)
+        showDialog(
+            context: context,
+            builder: (_) => Container(
+                 
+                  child: new AlertDialog(
+                    elevation: 0,
+                    title: new Text("Error"),
+                    content: new Text("Please Create An Account First"),
+                  ),
+                ));
     }
   }
 

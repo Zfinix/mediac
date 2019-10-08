@@ -1,13 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
 
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mediac/auth/signup.dart';
+import 'package:mediac/utils/base64/images.dart';
 import 'package:mediac/utils/margin_utils.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'auth/login.dart';
-import 'utils/conectivity.dart';
 
 void main() {
   //ConnectionStatusSingleton connectionStatus = ConnectionStatusSingleton.getInstance();
@@ -37,10 +37,7 @@ class Intersit extends StatefulWidget {
   _IntersitState createState() => _IntersitState();
 }
 
-class _IntersitState extends BaseState<Intersit> {
-  StreamSubscription _connectionChangeStream;
-
-  bool isOffline = false;
+class _IntersitState extends State<Intersit> {
   Widget page;
   double opacity = 1;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -69,7 +66,7 @@ class _IntersitState extends BaseState<Intersit> {
     print(pendingNotificationRequests);
   }
 
- /* @override
+  /* @override
   void castStatefulWidget() {
     // ignore: unnecessary_statements
     widget is Intersit;
@@ -103,13 +100,23 @@ class _IntersitState extends BaseState<Intersit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(28.0),
-        child: AnimatedOpacity(
-            duration: Duration(milliseconds: 500),
-            child: page,
-            opacity: opacity),
+      //backgroundColor: Colors.white,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            colorFilter: new ColorFilter.mode(
+                Colors.white.withOpacity(0.953), BlendMode.screen),
+            image: MemoryImage(base64.decode('$base64Image')),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(28.0),
+          child: AnimatedOpacity(
+              duration: Duration(milliseconds: 500),
+              child: page,
+              opacity: opacity),
+        ),
       ),
     );
   }
@@ -126,8 +133,6 @@ class _IntersitState extends BaseState<Intersit> {
       opacity = 1;
     });
   }
-
-  
 }
 
 class IntersitPage extends StatefulWidget {
@@ -165,32 +170,38 @@ class _IntersitPageState extends State<IntersitPage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
-                OutlineButton(
-                  highlightColor: Colors.white24,
-                  color: Colors.blue,
-                  textColor: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                  onPressed: () {
-                    this.widget.changeView(Signup(widget.changeView));
-                  },
-                  child: Text(
-                    "Create an Account",
-                    style: TextStyle(fontSize: 16),
+                Container(
+                  color: Colors.white,
+                  child: OutlineButton(
+                    highlightColor: Colors.white24,
+                    color: Colors.blue,
+                    textColor: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    onPressed: () {
+                      this.widget.changeView(Signup(widget.changeView));
+                    },
+                    child: Text(
+                      "Create an Account",
+                      style: TextStyle(fontSize: 16),
+                    ),
                   ),
                 ),
-                OutlineButton(
-                  highlightColor: Colors.white24,
-                  color: Colors.blue,
-                  textColor: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                  onPressed: () {
-                    this.widget.changeView(Login(widget.changeView));
-                  },
-                  child: Text(
-                    "Sign in",
-                    style: TextStyle(fontSize: 16),
+                Container(
+                  color: Colors.white,
+                  child: OutlineButton(
+                    highlightColor: Colors.white24,
+                    color: Colors.blue,
+                    textColor: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    onPressed: () {
+                      this.widget.changeView(Login(widget.changeView));
+                    },
+                    child: Text(
+                      "Sign in",
+                      style: TextStyle(fontSize: 16),
+                    ),
                   ),
                 ),
               ],

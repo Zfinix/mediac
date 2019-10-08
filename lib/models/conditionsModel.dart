@@ -1,13 +1,13 @@
 class ConditionsModel {
-  List<Data> data;
+  List<ConditionData> data;
 
   ConditionsModel({this.data});
 
   ConditionsModel.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = new List<Data>();
+      data = new List<ConditionData>();
       json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
+        data.add(new ConditionData.fromJson(v));
       });
     }
   }
@@ -21,7 +21,7 @@ class ConditionsModel {
   }
 }
 
-class Data {
+class ConditionData {
   String id;
   String name;
   String commonName;
@@ -33,7 +33,7 @@ class Data {
   Extras extras;
   String triageLevel;
 
-  Data(
+  ConditionData(
       {this.id,
       this.name,
       this.commonName,
@@ -45,7 +45,7 @@ class Data {
       this.extras,
       this.triageLevel});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  ConditionData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     commonName = json['common_name'];

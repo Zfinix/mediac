@@ -34,6 +34,7 @@ class Auth implements BaseAuth {
      showDialog(
               context: context,
               builder: (_) => new AlertDialog(
+                  elevation: 0,
                     title: new Text("Password Reset"),
                     content: new Text("Password Reset Email Sent"),
                   ));

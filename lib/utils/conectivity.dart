@@ -70,7 +70,7 @@ abstract class BaseState<T extends StatefulWidget> extends State {
         backgroundColor: Colors.red,
         duration: Duration(seconds: 5),
       ).show(context);
-    } else  {
+    } else {
       await Flushbar(
         messageText: Text(
           "Connected",

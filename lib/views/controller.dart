@@ -1,8 +1,4 @@
-import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mediac/functions/api.dart';
 import 'package:mediac/models/NLPModel.dart';
 import 'package:mediac/models/diagnosisResponse.dart';
@@ -10,12 +6,11 @@ import 'package:mediac/models/offlineUserModel.dart';
 import 'package:mediac/models/submitSymptoms.dart';
 import 'package:mediac/utils/date.dart';
 import 'package:mediac/utils/margin_utils.dart';
-import 'package:mediac/utils/persistence.dart';
-import 'package:mediac/utils/url.dart';
 import 'package:mediac/views/symptoms.dart';
 import 'package:mediac/views/symptomsOffline.dart';
 
 import 'diagnosis.dart';
+import 'notifications.dart';
 
 class Controller extends StatefulWidget {
   const Controller({Key key, @required this.changeView, this.userModel})
@@ -44,8 +39,9 @@ class _ControllerState extends State<Controller> {
 
   Container startButton() {
     return Container(
+      color: Colors.white,
       child: OutlineButton(
-        highlightColor: Colors.white24,
+        highlightColor: Colors.white,
         color: Colors.blue,
         textColor: Colors.blue,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -68,6 +64,7 @@ class _ControllerState extends State<Controller> {
 
   Container offlineButton() {
     return Container(
+      color: Colors.white,
       child: OutlineButton(
         highlightColor: Colors.white24,
         color: Colors.blue,
@@ -209,6 +206,8 @@ var d = string.indexOf(substring) != -1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
+          backgroundColor: Colors.transparent,
         appBar: AppBar(
           brightness: Brightness.light,
           title: _searchIcon.icon == Icons.search
@@ -217,7 +216,7 @@ var d = string.indexOf(substring) != -1;
                   'How do you Feel?',
                   style: TextStyle(color: Colors.black),
                 ),
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
           elevation: 0,
           actions: <Widget>[
             IconButton(
@@ -226,10 +225,21 @@ var d = string.indexOf(substring) != -1;
                 _searchIcon.icon,
                 color: Colors.blue,
               ),
-            )
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(
+                      fullscreenDialog: true,
+                      builder: (context) => Notifications()));
+              },
+              icon: Icon(
+                Icons.people_outline,
+                color: Colors.redAccent,
+              ),
+            ),
           ],
         ),
-        backgroundColor: Colors.white,
         body: _searchIcon.icon == Icons.search
             ? Container(
                 child: Column(
@@ -253,10 +263,7 @@ var d = string.indexOf(substring) != -1;
                     cYM(30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        startButton(),
-                        offlineButton()
-                      ],
+                      children: <Widget>[startButton(), offlineButton()],
                     ),
                     cYM(30),
                     Text(
