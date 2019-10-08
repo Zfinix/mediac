@@ -78,6 +78,7 @@ class _IntersitState extends State<Intersit> {
     }
   }
 
+  
   Future<void> onDidReceiveLocalNotification(
       int id, String title, String body, String payload) async {
     // display a dialog with the notification details, tap ok to go to another page
@@ -90,7 +91,9 @@ class _IntersitState extends State<Intersit> {
           CupertinoDialogAction(
             isDefaultAction: true,
             child: Text('Ok'),
-            onPressed: () async {},
+            onPressed: () async {
+
+            },
           )
         ],
       ),
@@ -98,7 +101,7 @@ class _IntersitState extends State<Intersit> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext  jcontext) {
     return Scaffold(
       //backgroundColor: Colors.white,
       body: Container(
